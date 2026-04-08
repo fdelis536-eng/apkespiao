@@ -8,6 +8,7 @@ export default async function handler(req, res) {
 
     const API_TOKEN = process.env.API_TOKEN;
     const API_SECRET = process.env.API_SECRET;
+    const API_KEY = process.env.API_KEY;
     const CALLBACK_URL = process.env.CALLBACK_URL;
     const ACQUIRER_CODE = process.env.ACQUIRER_CODE || "adquirente1";
 
@@ -38,14 +39,20 @@ export default async function handler(req, res) {
       .update(`${ts}.${body}`)
       .digest("hex");
 
+    const headers = {
+      Authorization: `Bearer ${API_TOKEN}`,
+      "Content-Type": "application/json",
+      "X-C7-Timestamp": ts,
+      "X-C7-Signature": sig
+    };
+
+    if (API_KEY) {
+      headers["X-API-KEY"] = API_KEY;
+    }
+
     const response = await fetch("https://api.carteirado7.com/v2/payment/create", {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${API_TOKEN}`,
-        "Content-Type": "application/json",
-        "X-C7-Timestamp": ts,
-        "X-C7-Signature": sig
-      },
+      headers,
       body
     });
 
