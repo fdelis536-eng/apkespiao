@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Acesso Liberado | Localize Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#04080f;
+  --text:#e8f4ff;
+  --muted:#7a9ab8;
+  --primary:#00e5ff;
+  --primary-dim:rgba(0,229,255,.10);
+  --green:#00ff88;
+  --green-dim:rgba(0,255,136,.10);
+  --card:rgba(255,255,255,.04);
+  --stroke:rgba(255,255,255,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'DM Sans',sans-serif;
+  color:var(--text);background:var(--bg);
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;
+  overflow:hidden;
+}
+
+/* PARTICLES */
+.particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.p{
+  position:absolute;border-radius:50%;
+  background:var(--green);opacity:0;
+  animation:float-up linear infinite;
+}
+@keyframes float-up{
+  0%{opacity:0;transform:translateY(100vh) scale(0)}
+  10%{opacity:.6}
+  90%{opacity:.2}
+  100%{opacity:0;transform:translateY(-20vh) scale(1)}
+}
+
+/* GRID BG */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    linear-gradient(rgba(0,229,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,229,255,.03) 1px,transparent 1px);
+  background-size:40px 40px;z-index:0;pointer-events:none;
+}
+body::after{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(circle at 50% 40%,rgba(0,255,136,.06),transparent 55%),
+    radial-gradient(circle at 20% 80%,rgba(0,229,255,.04),transparent 40%);
+  z-index:0;pointer-events:none;
+}
+
+.wrapper{
+  position:relative;z-index:1;
+  max-width:600px;width:100%;text-align:center;
+}
+
+/* ICON */
+.check-wrap{
+  margin:0 auto 32px;
+  width:110px;height:110px;
+  position:relative;display:flex;align-items:center;justify-content:center;
+}
+.check-ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:2px solid rgba(0,255,136,.3);
+  animation:ring-expand 2s ease-out infinite;
+}
+.check-ring:nth-child(2){animation-delay:.6s;border-color:rgba(0,255,136,.15)}
+.check-ring:nth-child(3){animation-delay:1.2s;border-color:rgba(0,255,136,.08)}
+@keyframes ring-expand{
+  0%{transform:scale(.9);opacity:.8}
+  100%{transform:scale(1.6);opacity:0}
+}
+.check-circle{
+  width:80px;height:80px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(0,255,136,.15),rgba(0,229,255,.10));
+  border:2px solid rgba(0,255,136,.4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:36px;
+  box-shadow:0 0 50px rgba(0,255,136,.25),0 0 100px rgba(0,255,136,.1);
+  animation:pop-in .6s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes pop-in{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* TEXT */
+.congrats-label{
+  font-size:12px;font-weight:700;color:var(--green);
+  text-transform:uppercase;letter-spacing:1.5px;
+  margin-bottom:14px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  animation:fade-up .5s .2s both;
+}
+.dot-green{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+.main-title{
+  font-family:'Syne',sans-serif;font-size:52px;font-weight:800;
+  letter-spacing:-1.5px;line-height:1.05;
+  margin-bottom:16px;
+  animation:fade-up .5s .3s both;
+}
+.main-title em{
+  font-style:normal;
+  background:linear-gradient(135deg,var(--green),var(--primary));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.sub{
+  color:var(--muted);font-size:17px;line-height:1.7;
+  max-width:480px;margin:0 auto 36px;
+  animation:fade-up .5s .4s both;
+}
+@keyframes fade-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* STEPS */
+.steps-wrap{
+  display:flex;flex-direction:column;gap:12px;
+  margin-bottom:36px;text-align:left;
+  animation:fade-up .5s .5s both;
+}
+.step-row{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px 18px;border-radius:16px;
+  background:var(--card);border:1px solid var(--stroke);
+  transition:.3s;
+}
+.step-row.highlight{
+  border-color:rgba(0,255,136,.2);
+  background:rgba(0,255,136,.05);
+}
+.step-icon{
+  width:36px;height:36px;flex-shrink:0;
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:18px;
+  background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.15);
+}
+.step-row.active .step-icon{
+  background:var(--green-dim);border-color:rgba(0,255,136,.3);
+  box-shadow:0 0 16px rgba(0,255,136,.15);
+}
+.step-content-title{font-weight:700;font-size:14px;margin-bottom:3px}
+.step-content-sub{font-size:13px;color:var(--muted)}
+
+/* BUTTON */
+.btn-access{
+  display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  padding:20px 44px;border-radius:18px;
+  background:linear-gradient(135deg,var(--green),#00cc6a);
+  color:#020c16;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:18px;
+  text-decoration:none;
+  box-shadow:0 0 40px rgba(0,255,136,.3),0 20px 50px rgba(0,0,0,.4);
+  transition:all .2s;
+  animation:fade-up .5s .6s both;
+  position:relative;overflow:hidden;
+}
+.btn-access::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+  opacity:0;transition:.2s;
+}
+.btn-access:hover::before{opacity:1}
+.btn-access:hover{transform:translateY(-3px);box-shadow:0 0 60px rgba(0,255,136,.45),0 24px 60px rgba(0,0,0,.5)}
+.arrow{transition:.2s;font-size:20px}
+.btn-access:hover .arrow{transform:translateX(4px)}
+
+.note{
+  margin-top:18px;font-size:13px;color:var(--muted);
+  animation:fade-up .5s .7s both;
+}
+.note a{color:var(--primary);text-decoration:none}
+.note a:hover{text-decoration:underline}
+
+/* BOTTOM BADGES */
+.badges{
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  margin-top:36px;flex-wrap:wrap;
+  animation:fade-up .5s .8s both;
+}
+.badge-item{
+  font-size:12px;font-weight:700;color:var(--muted);
+  display:flex;align-items:center;gap:6px;
+}
+
+/* RESPONSIVE */
+@media(max-width:500px){
+  .main-title{font-size:36px}
+  .btn-access{padding:18px 30px;font-size:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<div class="wrapper">
+  <!-- Check -->
+  <div class="check-wrap">
+    <div class="check-ring"></div>
+    <div class="check-ring"></div>
+    <div class="check-ring"></div>
+    <div class="check-circle">✓</div>
+  </div>
+
+  <!-- Text -->
+  <div class="congrats-label"><div class="dot-green"></div> Pagamento confirmado</div>
+  <h1 class="main-title">Seu acesso está<br><em>liberado!</em></h1>
+  <p class="sub">Tudo certo. O pagamento foi confirmado e o Localize Pro está pronto para você. Clique no botão abaixo e comece agora.</p>
+
+  <!-- Steps -->
+  <div class="steps-wrap">
+    <div class="step-row">
+      <div class="step-icon">✅</div>
+      <div>
+        <div class="step-content-title">Pagamento confirmado</div>
+        <div class="step-content-sub">PIX recebido e verificado com sucesso</div>
+      </div>
+    </div>
+    <div class="step-row highlight active">
+      <div class="step-icon">🚀</div>
+      <div>
+        <div class="step-content-title">Acesse o sistema agora</div>
+        <div class="step-content-sub">Clique abaixo para entrar no Localize Pro</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <a class="btn-access" href="LINK_DO_DRIVE_AQUI" target="_blank" rel="noopener">
+    Acessar o Localize Pro <span class="arrow">→</span>
+  </a>
+
+  <div class="note">
+    Problemas com o acesso? Entre em contato pelo <a href="#">suporte</a>.
+  </div>
+
+  <!-- Badges -->
+  <div class="badges">
+    <div class="badge-item">🔒 Acesso seguro</div>
+    <div class="badge-item">📱 Funciona no celular</div>
+    <div class="badge-item">👻 100% discreto</div>
+  </div>
+</div>
+
+<script>
+// Particles
+const container = document.getElementById('particles');
+for (let i = 0; i < 18; i++) {
+  const p = document.createElement('div');
+  p.className = 'p';
+  const size = Math.random() * 6 + 2;
+  p.style.cssText = `
+    width:${size}px;height:${size}px;
+    left:${Math.random() * 100}%;
+    animation-duration:${4 + Math.random() * 6}s;
+    animation-delay:${Math.random() * 4}s;
+    opacity:0;
+  `;
+  // Alternate colors
+  if (i % 3 === 1) p.style.background = 'var(--primary)';
+  if (i % 3 === 2) p.style.background = '#ffffff';
+  container.appendChild(p);
+}
+
+// Replace href with actual Drive link when ready
+// document.querySelector('.btn-access').href = 'YOUR_DRIVE_LINK_HERE';
+</script>
+</body>
+</html>
